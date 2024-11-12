@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "mv": "mv out docs",
+    "rm": "rm -rf docs",
     "export": "next export",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d out"
