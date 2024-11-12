@@ -8,8 +8,8 @@
     "mv": "mv out docs",
     "rm": "rm -rf docs",
     "export": "next export",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d out"
+    "git": "git add . && git commit && git push origin main",
+    "deploy": "npm run rm && npm run build && npm run mv && npm run git"
   },
   "dependencies": {
     "next": "15.0.3",
@@ -27,5 +27,5 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
-  "homepage": "https://o-tips.github.io/quicklyAR/"
+  "homepage": "https://o-tips.github.io/quicklyAR"
 }

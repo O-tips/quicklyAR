@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import '../app/styles.css';
+import './Button.css';
 
 interface FileUploadButtonProps {
   label: string;
