@@ -10,7 +10,7 @@
   }
   
   .upload-button {
-    background-color: #007bff;
+    background-color: #d8c34f;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -25,11 +25,11 @@
   }
   
   .upload-button:hover {
-    background-color: #0056b3;
+    background-color: #b6a026;
   }
   
   .custom-button {
-    background-color: #4CAF50;
+    background-color: #7ba6b4;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -44,15 +44,15 @@
   }
   
   .custom-button:hover {
-    background-color: #45a049;
+    background-color: #3a859e;
   }
   
   .reset-button {
-    background-color: #f44336;
+    background-color: #cb8d91;
   }
   
   .reset-button:hover {
-    background-color: #d32f2f;
+    background-color: #ac676c;
   }
   
   .file-name {

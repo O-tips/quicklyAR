@@ -31,7 +31,7 @@ export default function Page() {
         <div className="container">
             <Header />
             <h3>.mindへの変換ツールは 
-                <a href="https://hiukim.github.io/mind-ar-js-doc/tools/compile">こちら</a>
+                <a href="https://hiukim.github.io/mind-ar-js-doc/tools/compile" className="link">こちら</a>
             </h3>
             <div className="button-container">
                 <FileUploadButton 
