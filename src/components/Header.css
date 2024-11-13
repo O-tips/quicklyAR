@@ -13,6 +13,7 @@
     margin: 0; /* マージンなし */
     /*color: white;*/
     color: #1e2423;
+    padding: 0 0 20px;
 }
   
 .header-subtitle {
