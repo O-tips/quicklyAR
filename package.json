@@ -9,7 +9,7 @@
     "rm": "rm -rf docs",
     "export": "next export",
     "git": "git add . && git commit && git push origin main",
-    "deploy": "npm run rm && npm run build && npm run mv && npm run git"
+    "deploy": "npm run rm && npm run build && npm run mv && touch docs/.nojekyll && npm run git"
   },
   "dependencies": {
     "next": "15.0.3",
