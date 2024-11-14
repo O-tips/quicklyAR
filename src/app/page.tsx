@@ -1,74 +1,77 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Suspense } from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header'; 
 import FileUploadButton from "../components/FileUploadButton";
 import Button from '../components/Button';
 import './styles.css';
 
 export default function Page() {
-    const router = useRouter();
-    const [isLoading, setIsLoading] = useState(false);  
+    const [markerFile, setMarkerFile] = useState<File | null>(null);
+    const [modelFile, setModelFile] = useState<File | null>(null);
 
     const handle3DModelSelect = (file: File) => {
         console.log('Selected 3D model:', file.name);
-        // 3Dモデルのアップロード処理をここに実装
+        setModelFile(file);  // Save the model file in state
     };
 
     const handleARMarkerSelect = (file: File) => {
         console.log('Selected AR marker:', file.name);
-        // ARマーカーのアップロード処理をここに実装
+        setMarkerFile(file);  // Save the marker file in state
     };
 
-    const handleGenerateAR = async () => {
-        setIsLoading(true);
-        try {
-          // マーカーとモデルのファイルを準備
-        //   const markerFile = new File([''], 'marker.mind', { type: 'application/octet-stream' });
-        //   const modelFile = new File([''], 'model.glb', { type: 'application/octet-stream' });
-    
-        //   const formData = new FormData();
-        //   formData.append('marker', markerFile);
-        //   formData.append('model', modelFile);
-    
-        //   // APIエンドポイントを呼び出してファイルをアップロード
-        //   const response = await fetch('https://oshaberi-17c056aaa88b.herokuapp.com/upload', {
-        //     method: 'POST',
-        //     body: formData,
-        //   });
-    
-        //   if (!response.ok) {
-        //     throw new Error('Failed to upload files');
-        //   }
-    
-        //   const data = await response.json();
-        //   const uniqueKey = data; // APIからの応答で返されるユニークキー
+    const handleGenerateClick = async () => {
+        if (!markerFile || !modelFile) {
+            console.error('Please select both the AR marker and 3D model files.');
+            return;
+        }
 
-          const uniqueKey = 'test_id';
-    
-          // event/[id]/page.tsxに遷移
-          router.push(`/event/${uniqueKey}`);
-        } catch (error) {
-          console.error('Error generating AR site:', error);
-          // エラー処理を追加（例：ユーザーへの通知）
-        } finally {
-          setIsLoading(false);
+        // Create FormData and append the files
+        const formData = new FormData();
+        formData.append('marker', markerFile);
+        formData.append('model', modelFile);
+
+        try {
+            const response = await fetch('https://oshaberi-17c056aaa88b.herokuapp.com/upload', {
+                method: 'POST',
+                body: formData,
+            });
+        
+            if (response.ok) {
+                console.log('Files uploaded successfully');
+                // Handle successful upload (e.g., show success message, redirect, etc.)
+            } else {
+                const responseBody = await response.text(); // レスポンスの内容も確認
+                console.error('Failed to upload files', response.statusText, responseBody);
+            }
+        } catch (error: any) {
+            console.error('Error uploading files', error);
+            
+            // エラーオブジェクトの詳細を表示
+            if (error instanceof Error) {
+                console.error('Error message:', error.message);  // エラーメッセージ
+                console.error('Stack trace:', error.stack);  // スタックトレース
+            } else {
+                console.error('Unknown error', error);
+            }
         }
     };
 
     const handleResetClick = () => {
         console.log('Reset clicked');
-        // リセット処理をここに実装
+        setMarkerFile(null);
+        setModelFile(null);
     };
 
     return (
         <Suspense fallback={<div>Loading...</div>}>
         <div className="container">
             <Header />
-            <h3>.mindへの変換ツールは 
-                <a href="https://hiukim.github.io/mind-ar-js-doc/tools/compile" className="link">こちら</a>
+            <h3>
+                .mindへの変換ツールは 
+                <a href="https://hiukim.github.io/mind-ar-js-doc/tools/compile" className="link">
+                    こちら
+                </a>
             </h3>
             <div className="button-container">
                 <FileUploadButton 
@@ -78,7 +81,11 @@ export default function Page() {
                 />
                 <FileUploadButton 
                     label="ARマーカーを選択" 
+<<<<<<< HEAD
                     acceptedFileTypes=".mind" 
+=======
+                    acceptedFileTypes=".jpg,.jpeg,.png,.mind" 
+>>>>>>> 8d95cfa4724d09476ef453bca20c6e81e880f1e4
                     onFileSelect={handleARMarkerSelect} 
                 />
             </div>
@@ -99,6 +106,11 @@ export default function Page() {
                 />
             </div>
         </div>
+<<<<<<< HEAD
         </Suspense>
     )
   }
+=======
+    );
+}
+>>>>>>> 8d95cfa4724d09476ef453bca20c6e81e880f1e4
