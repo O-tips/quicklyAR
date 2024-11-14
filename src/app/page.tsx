@@ -77,12 +77,12 @@ export default function Page() {
             <div className="button-container">
                 <FileUploadButton 
                     label="3Dモデルを選択" 
-                    acceptedFileTypes=".glb,.gltf,.obj,.fbx" 
+                    acceptedFileTypes=".glb,.gltf" 
                     onFileSelect={handle3DModelSelect} 
                 />
                 <FileUploadButton 
                     label="ARマーカーを選択" 
-                    acceptedFileTypes=".jpg,.jpeg,.png" 
+                    acceptedFileTypes=".mind" 
                     onFileSelect={handleARMarkerSelect} 
                 />
             </div>
