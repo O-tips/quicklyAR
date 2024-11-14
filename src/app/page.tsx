@@ -55,8 +55,11 @@ export default function Page() {
 
       const uniqueKey = "fake-id-" + Math.random().toString(36).substr(2, 9);
 
+      const query = new URLSearchParams({
+        id: uniqueKey,
+      }).toString();
       // event/[id]/page.tsxに遷移
-      router.push(`/event/${uniqueKey}`);
+      router.push(`/event?${query}`);
     } catch (error) {
       console.error("Error generating AR site:", error);
       // エラー処理を追加（例：ユーザーへの通知）
