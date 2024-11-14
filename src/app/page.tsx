@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { QRCode } from 'qrcode.react'; // 名前付きインポートに変更
 import Header from '../components/Header'; 
 import FileUploadButton from "../components/FileUploadButton";
 import Button from '../components/Button';
@@ -11,15 +12,16 @@ export default function Page() {
     const [modelFile, setModelFile] = useState<File | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [qrUrl, setQrUrl] = useState<string | null>(null);  // QRコードURLの状態
 
     const handle3DModelSelect = (file: File) => {
         console.log('Selected 3D model:', file.name);
-        setModelFile(file);  // Save the model file in state
+        setModelFile(file);  // モデルファイルを状態に保存
     };
 
     const handleARMarkerSelect = (file: File) => {
         console.log('Selected AR marker:', file.name);
-        setMarkerFile(file);  // Save the marker file in state
+        setMarkerFile(file);  // マーカーファイルを状態に保存
     };
 
     const handleGenerateClick = async () => {
@@ -43,8 +45,10 @@ export default function Page() {
 
             if (response.ok) {
                 const responseData = await response.json();
-                const responseString = JSON.stringify(responseData, null, 2);  // Convert response data to string
-                setMessage(`Success: https://o-tips.github.io/quicklyAR/?id=${responseString}`);
+                const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:3000';
+                const eventUrl = `${baseUrl}/event/${responseData.uuid}`;
+                setMessage(`Success: ${eventUrl}`);
+                setQrUrl(eventUrl);  // QRコードURLを設定
             } else {
                 const responseBody = await response.text();
                 console.error('Failed to upload files:', response.statusText, responseBody);
@@ -62,6 +66,7 @@ export default function Page() {
         setMarkerFile(null);
         setModelFile(null);
         setMessage(null);
+        setQrUrl(null);  // QRコードURLをリセット
     };
 
     return (
@@ -100,6 +105,15 @@ export default function Page() {
             </div>
             {isLoading && <p className="loading-message">アップロード中...</p>}
             {message && <pre className={`message ${message.startsWith('Success') ? 'success' : 'error'}`}>{message}</pre>}
+            
+            {/* QRコードURLが設定されていればQRコードを表示 */}
+            {qrUrl && (
+                <div className="qr-container">
+                    {/* <QRCode value={qrUrl} size={256} /> */}
+                    <QRCode value="https://ja.wikipedia.org/wiki/%E9%98%BF%E9%83%A8%E5%AF%9B" size={256} />
+                    <p>QR Code for the event URL</p>
+                </div>
+            )}
         </div>
     );
 }
