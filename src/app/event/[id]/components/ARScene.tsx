@@ -15,7 +15,12 @@ declare global {
   }
 }
 
-const ARScene: React.FC = () => {
+interface ARSceneProps {
+  markerUrl: string | null;
+  modelUrl: string | null;
+}
+
+const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   useEffect(() => {
     // コンポーネントがマウントされた後にA-Frameのシーンを初期化
     require('aframe');
@@ -24,15 +29,17 @@ const ARScene: React.FC = () => {
 
   return (
     <a-scene
-      mindar-image="imageTargetSrc: assets/target-images/yuki.mind;"
+      mindar-image={`imageTargetSrc: ${markerUrl};`}
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false"
     >
       <a-assets>
-        <a-asset-item id="model0" src="assets/models/azarashi3.glb"></a-asset-item>
-        <audio id="soundEffect" src="assets/sounds/celebration.mp3"></audio>
+        {modelUrl && (
+          <a-asset-item id="model0" src={modelUrl}></a-asset-item>
+        )}
+        {/* <audio id="soundEffect" src="assets/sounds/celebration.mp3"></audio> */}
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>

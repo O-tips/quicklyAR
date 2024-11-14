@@ -1,17 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 import Header from '../components/Header'; 
 import FileUploadButton from "../components/FileUploadButton";
 import Button from '../components/Button';
 import './styles.css';
-
-async function fetchEventId() {
-    const response = await fetch('https://oshaberi-17c056aaa88b.herokuapp.com/api/events');
-    const data = await response.json();
-    return data.eventId; // APIのレスポンス構造に応じて適切にアクセスしてください
-}
 
 export default function Page() {
     const router = useRouter();
@@ -51,7 +46,7 @@ export default function Page() {
         //   const data = await response.json();
         //   const uniqueKey = data; // APIからの応答で返されるユニークキー
 
-            const uniqueKey = 'fake-id-' + Math.random().toString(36).substr(2, 9);
+          const uniqueKey = 'test_id';
     
           // event/[id]/page.tsxに遷移
           router.push(`/event/${uniqueKey}`);
@@ -69,6 +64,7 @@ export default function Page() {
     };
 
     return (
+        <Suspense fallback={<div>Loading...</div>}>
         <div className="container">
             <Header />
             <h3>.mindへの変換ツールは 
@@ -103,5 +99,6 @@ export default function Page() {
                 />
             </div>
         </div>
+        </Suspense>
     )
   }
