@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'aframe';
 import 'mind-ar/dist/mindar-image-aframe.prod.js';
 
@@ -21,11 +21,36 @@ interface ARSceneProps {
 }
 
 const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
+  const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
+
   useEffect(() => {
-    // コンポーネントがマウントされた後にA-Frameのシーンを初期化
-    require('aframe');
-    require('mind-ar/dist/mindar-image-aframe.prod.js');
+    console.log("markerUrl : " + markerUrl);
+    console.log("modelUrl : " + modelUrl);
+    // クライアントサイドでのみaframeとMindARを動的にインポート
+    const loadAFrame = async () => {
+      if (typeof window !== "undefined") {
+        const aframe = await import("aframe");
+        const mindar = await import("mind-ar/dist/mindar-image-aframe.prod.js");
+
+        // AFRAMEが利用可能になった後に初期化コードを実行
+        console.log("A-Frame and MindAR initialized", aframe, mindar);
+        setIsAFrameLoaded(true);
+        // AFRAMEのカスタムコンポーネントやシーン設定をここに記述できます
+      }
+    };
+
+    loadAFrame();
   }, []);
+
+  if (!isAFrameLoaded) {
+    // A-FrameとMindARがロードされるまでローディング画面を表示
+    // TODO:2回違うぐるぐるが出てくるのを少しどうにかしたい
+    return (
+      <div>
+        "abc"
+      </div>
+    );
+  }
 
   return (
       <a-scene
