@@ -1,5 +1,6 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import CircularProgress from "@mui/material/CircularProgress";
 // import "aframe";
 // import "mind-ar/dist/mindar-image-aframe.prod.js";
 
@@ -17,20 +18,8 @@ declare global {
 }
 
 const ARScene: React.FC = () => {
+  const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
   useEffect(() => {
-    // コンポーネントがマウントされた後にA-Frameのシーンを初期化
-    // require('aframe');
-    // require('mind-ar/dist/mindar-image-aframe.prod.js');
-    // クライアントサイドでのみaframeをインポート;
-    // if (typeof window !== "undefined") {
-    //   import("aframe").then(() => {
-    //     console.log("A-Frame initialized");
-    //   });
-    //   import("mind-ar/dist/mindar-image-aframe.prod.js").then(() => {
-    //     console.log("MindAR initialized");
-    //   });
-    // }
-
     // クライアントサイドでのみaframeとMindARを動的にインポート
     const loadAFrame = async () => {
       if (typeof window !== "undefined") {
@@ -39,13 +28,30 @@ const ARScene: React.FC = () => {
 
         // AFRAMEが利用可能になった後に初期化コードを実行
         console.log("A-Frame and MindAR initialized", aframe, mindar);
-
+        setIsAFrameLoaded(true);
         // AFRAMEのカスタムコンポーネントやシーン設定をここに記述できます
       }
     };
 
     loadAFrame();
   }, []);
+
+  if (!isAFrameLoaded) {
+    // A-FrameとMindARがロードされるまでローディング画面を表示
+    // TODO:2回違うぐるぐるが出てくるのを少しどうにかしたい
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh", // 画面の高さを基準に中央配置
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
 
   return (
     <a-scene
