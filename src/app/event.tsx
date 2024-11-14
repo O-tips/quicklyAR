@@ -5,15 +5,12 @@ import Header from '../components/Header';
 import FileUploadButton from "../components/FileUploadButton";
 import Button from '../components/Button';
 import './styles.css';
-import ReactDOM from 'react-dom';
-import {QRCodeSVG} from 'qrcode.react';
 
-export default function Page() {
+const Event = () => {
     const [markerFile, setMarkerFile] = useState<File | null>(null);
     const [modelFile, setModelFile] = useState<File | null>(null);
     const [message, setMessage] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [qrUrl, setQrUrl] = useState<string | null>(null);  // QRコードURLの状態
 
     const handle3DModelSelect = (file: File) => {
         console.log('Selected 3D model:', file.name);
@@ -49,7 +46,6 @@ export default function Page() {
                 const baseUrl = process.env.REACT_APP_BASE_URL || 'http://localhost:3000';
                 const eventUrl = `${baseUrl}/event/${responseData}`;
                 setMessage(`Success: ${eventUrl}`);
-                setQrUrl(eventUrl);  // QRコードURLを設定
             } else {
                 const responseBody = await response.text();
                 console.error('Failed to upload files:', response.statusText, responseBody);
@@ -67,7 +63,6 @@ export default function Page() {
         setMarkerFile(null);
         setModelFile(null);
         setMessage(null);
-        setQrUrl(null);  // QRコードURLをリセット
     };
 
     return (
@@ -106,14 +101,8 @@ export default function Page() {
             </div>
             {isLoading && <p className="loading-message">アップロード中...</p>}
             {message && <pre className={`message ${message.startsWith('Success') ? 'success' : 'error'}`}>{message}</pre>}
-            
-            {/* QRコードURLが設定されていればQRコードを表示 */}
-            {qrUrl && (
-                <div className="qr-container">
-                    <QRCodeSVG value={qrUrl} size={256} />
-                    <p>QR Code for the event URL</p>
-                </div>
-            )}
         </div>
     );
-}
+};
+
+export default Event;
