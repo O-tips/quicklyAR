@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Header from '../components/Header'; 
 import FileUploadButton from "../components/FileUploadButton";
 import Button from '../components/Button';
@@ -9,6 +10,7 @@ import './styles.css';
 export default function Page() {
     const [markerFile, setMarkerFile] = useState<File | null>(null);
     const [modelFile, setModelFile] = useState<File | null>(null);
+    const router = useRouter();
 
     const handle3DModelSelect = (file: File) => {
         console.log('Selected 3D model:', file.name);
@@ -38,8 +40,10 @@ export default function Page() {
             });
         
             if (response.ok) {
-                console.log('Files uploaded successfully');
+                const key = await response.text();
+                console.log('Files uploaded successfully : ' + key);
                 // Handle successful upload (e.g., show success message, redirect, etc.)
+                router.push(`/event/${key}`);
             } else {
                 const responseBody = await response.text(); // レスポンスの内容も確認
                 console.error('Failed to upload files', response.statusText, responseBody);
@@ -64,7 +68,6 @@ export default function Page() {
     };
 
     return (
-        <Suspense fallback={<div>Loading...</div>}>
         <div className="container">
             <Header />
             <h3>
@@ -76,29 +79,20 @@ export default function Page() {
             <div className="button-container">
                 <FileUploadButton 
                     label="3Dモデルを選択" 
-                    acceptedFileTypes=".glb,.gltf" 
+                    acceptedFileTypes=".glb,.gltf,.obj,.fbx" 
                     onFileSelect={handle3DModelSelect} 
                 />
                 <FileUploadButton 
                     label="ARマーカーを選択" 
-<<<<<<< HEAD
-                    acceptedFileTypes=".mind" 
-=======
                     acceptedFileTypes=".jpg,.jpeg,.png,.mind" 
->>>>>>> 8d95cfa4724d09476ef453bca20c6e81e880f1e4
                     onFileSelect={handleARMarkerSelect} 
                 />
             </div>
             <div className="button-container">
                 <Button 
                     label="AR サイトを生成" 
-                    onClick={handleGenerateAR} 
+                    onClick={handleGenerateClick} 
                 />
-                <button
-                    onClick={handleGenerateAR}
-                    disabled={isLoading}>
-                    {isLoading ? 'Generating...' : 'Generate AR Site'}
-                </button>
                 <Button 
                     label="リセット" 
                     onClick={handleResetClick} 
@@ -106,11 +100,5 @@ export default function Page() {
                 />
             </div>
         </div>
-<<<<<<< HEAD
-        </Suspense>
-    )
-  }
-=======
     );
 }
->>>>>>> 8d95cfa4724d09476ef453bca20c6e81e880f1e4
