@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { QRCode } from "qrcode.react"; // 名前付きインポートに変更
+import { QRCodeSVG } from "qrcode.react"; // 名前付きインポートに変更
 import Header from "../components/Header";
 import FileUploadButton from "../components/FileUploadButton";
 import Button from "../components/Button";
@@ -58,7 +58,10 @@ export default function Page() {
         const responseData = await response.json();
         const baseUrl =
           process.env.REACT_APP_BASE_URL || "http://localhost:3000";
-        const eventUrl = `${baseUrl}/event/${responseData.uuid}`;
+        const query = new URLSearchParams({
+          id: responseData,
+        }).toString();
+        const eventUrl = `${baseUrl}/event?${query}`;
         setMessage(`Success: ${eventUrl}`);
         setQrUrl(eventUrl); // QRコードURLを設定
       } else {
@@ -132,7 +135,7 @@ export default function Page() {
       {qrUrl && (
         <div className="qr-container">
           {/* <QRCode value={qrUrl} size={256} /> */}
-          <QRCode
+          <QRCodeSVG
             value="https://ja.wikipedia.org/wiki/%E9%98%BF%E9%83%A8%E5%AF%9B"
             size={256}
           />
