@@ -53,8 +53,8 @@ export default function Page() {
       //   const data = await response.json();
       //   const uniqueKey = data; // APIからの応答で返されるユニークキー
 
-      const uniqueKey = "fake-id-" + Math.random().toString(36).substr(2, 9);
-
+      const uniqueKey = "051bc270-4c07-4ebd-b512-55e29d867d3c";
+      
       const query = new URLSearchParams({
         id: uniqueKey,
       }).toString();
