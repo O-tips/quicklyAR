@@ -9,6 +9,8 @@ import './styles.css';
 export default function Page() {
     const [markerFile, setMarkerFile] = useState<File | null>(null);
     const [modelFile, setModelFile] = useState<File | null>(null);
+    const [message, setMessage] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handle3DModelSelect = (file: File) => {
         console.log('Selected 3D model:', file.name);
@@ -22,45 +24,44 @@ export default function Page() {
 
     const handleGenerateClick = async () => {
         if (!markerFile || !modelFile) {
-            console.error('Please select both the AR marker and 3D model files.');
+            setMessage('Please select both the AR marker and 3D model files.');
             return;
         }
 
-        // Create FormData and append the files
         const formData = new FormData();
         formData.append('marker', markerFile);
         formData.append('model', modelFile);
+
+        setIsLoading(true);
+        setMessage(null);
 
         try {
             const response = await fetch('https://oshaberi-17c056aaa88b.herokuapp.com/upload', {
                 method: 'POST',
                 body: formData,
             });
-        
+
             if (response.ok) {
-                console.log('Files uploaded successfully');
-                // Handle successful upload (e.g., show success message, redirect, etc.)
+                const responseData = await response.json();
+                const responseString = JSON.stringify(responseData, null, 2);  // Convert response data to string
+                setMessage(`Success: https://o-tips.github.io/quicklyAR/?id=${responseString}`);
             } else {
-                const responseBody = await response.text(); // レスポンスの内容も確認
-                console.error('Failed to upload files', response.statusText, responseBody);
+                const responseBody = await response.text();
+                console.error('Failed to upload files:', response.statusText, responseBody);
+                setMessage('もう一度試してください');
             }
         } catch (error: any) {
-            console.error('Error uploading files', error);
-            
-            // エラーオブジェクトの詳細を表示
-            if (error instanceof Error) {
-                console.error('Error message:', error.message);  // エラーメッセージ
-                console.error('Stack trace:', error.stack);  // スタックトレース
-            } else {
-                console.error('Unknown error', error);
-            }
+            console.error('Error uploading files:', error);
+            setMessage('ネットワークエラーが発生しました。もう一度試してください。');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const handleResetClick = () => {
-        console.log('Reset clicked');
         setMarkerFile(null);
         setModelFile(null);
+        setMessage(null);
     };
 
     return (
@@ -88,13 +89,17 @@ export default function Page() {
                 <Button 
                     label="AR サイトを生成" 
                     onClick={handleGenerateClick} 
+                    disabled={isLoading}
                 />
                 <Button 
                     label="リセット" 
                     onClick={handleResetClick} 
                     className="reset-button"
+                    disabled={isLoading}
                 />
             </div>
+            {isLoading && <p className="loading-message">アップロード中...</p>}
+            {message && <pre className={`message ${message.startsWith('Success') ? 'success' : 'error'}`}>{message}</pre>}
         </div>
     );
 }
