@@ -12,6 +12,7 @@
     "deploy": "npm run rm && npm run build && npm run mv && touch docs/.nojekyll && npm run git"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106"
