@@ -1,53 +1,36 @@
-'use client';
+"use client";
 
 // App.tsx
-import React, { useEffect, useState } from 'react';
-import Header from './components/Header';
-import ARScene from './components/ARScene';
-import TextBox from './components/TextBox';
-import ScreenshotDisplay from './components/ScreenshotDisplay';
-import Footer from './components/Footer';
-import './styles.css';
+import React, { useEffect, useState } from "react";
+import Header from "./components/Header";
+import ARScene from "./components/ARScene";
+import TextBox from "./components/TextBox";
+import ScreenshotDisplay from "./components/ScreenshotDisplay";
+import Footer from "./components/Footer";
+import "../../styles.css";
 
-const App: React.FC = () => {
+function App({ params }: { params: Promise<{ id: string }> }) {
+  const [id, setId] = useState<string | null>(null);
   const [screenshot, setScreenshot] = useState<string | null>(null);
 
+  // React.use()を使ってparamsをアンラップ
+  const unwrappedParams = React.use(params); // paramsを解決
+
   useEffect(() => {
-    // Load external scripts
-    const scripts = [
-      'https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image.prod.js',
-      'https://aframe.io/releases/1.2.0/aframe.min.js',
-      'https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.4/dist/mindar-image-aframe.prod.js'
-    ];
-
-    scripts.forEach(src => {
-      const script = document.createElement('script');
-      script.src = src;
-      script.async = true;
-      document.body.appendChild(script);
-    });
-
-    // Load images
-    const header = new Image();
-    header.src = "assets/images/header.png";
-    const photoFrame = new Image();
-    photoFrame.src = "assets/images/photoFrame.png";
-  }, []);
+    if (unwrappedParams) {
+      setId(unwrappedParams.id); // 解決されたparamsからidを取得
+    }
+  }, [unwrappedParams]); // unwrappedParamsが変わるたびにidを更新
 
   return (
     <div>
-      <Header />
-      <div className="contents">
-        <div id="photo-frame-overlay" className="photo-frame-overlay">
-          <img src="assets/images/photoFrame.png" className="photo-frame-image" alt="Photo Frame" />
-        </div>
-        <ARScene />
-        <TextBox />
-        <ScreenshotDisplay screenshot={screenshot} />
-      </div>
+      <h1>User ID: {id}</h1>
+      <ARScene />
+      {/* <TextBox /> */}
+      <ScreenshotDisplay screenshot={screenshot} />
       <Footer setScreenshot={setScreenshot} screenshot={screenshot} />
     </div>
   );
-};
+}
 
 export default App;
