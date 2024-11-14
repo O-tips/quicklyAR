@@ -11,8 +11,7 @@ import { useSearchParams } from "next/navigation";
 
 function App() {
   const searchParams = useSearchParams();
-  // const id = searchParams.get("id");
-  const id = "051bc270-4c07-4ebd-b512-55e29d867d3c";
+  const id = searchParams.get("id");
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [markerUrl, setMarkerUrl] = useState<string | null>(null);
   const [modelUrl, setModelUrl] = useState<string | null>(null);

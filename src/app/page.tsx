@@ -33,28 +33,26 @@ export default function Page() {
     setIsLoading(true);
     try {
       // マーカーとモデルのファイルを準備
-      //   const markerFile = new File([''], 'marker.mind', { type: 'application/octet-stream' });
-      //   const modelFile = new File([''], 'model.glb', { type: 'application/octet-stream' });
+        const markerFile = new File([''], 'marker.mind', { type: 'application/octet-stream' });
+        const modelFile = new File([''], 'model.glb', { type: 'application/octet-stream' });
 
-      //   const formData = new FormData();
-      //   formData.append('marker', markerFile);
-      //   formData.append('model', modelFile);
+        const formData = new FormData();
+        formData.append('marker', markerFile);
+        formData.append('model', modelFile);
 
-      //   // APIエンドポイントを呼び出してファイルをアップロード
-      //   const response = await fetch('https://oshaberi-17c056aaa88b.herokuapp.com/upload', {
-      //     method: 'POST',
-      //     body: formData,
-      //   });
+        // APIエンドポイントを呼び出してファイルをアップロード
+        const response = await fetch('https://oshaberi-17c056aaa88b.herokuapp.com/upload', {
+            method: 'POST',
+            body: formData,
+        });
 
-      //   if (!response.ok) {
-      //     throw new Error('Failed to upload files');
-      //   }
+        if (!response.ok) {
+            throw new Error('Failed to upload files');
+        }
 
-      //   const data = await response.json();
-      //   const uniqueKey = data; // APIからの応答で返されるユニークキー
+        const data = await response.json();
+        const uniqueKey = data; // APIからの応答で返されるユニークキー
 
-      const uniqueKey = "051bc270-4c07-4ebd-b512-55e29d867d3c";
-      
       const query = new URLSearchParams({
         id: uniqueKey,
       }).toString();
