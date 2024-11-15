@@ -12,9 +12,7 @@
     "deploy": "npm run rm && npm run build && npm run mv && touch docs/.nojekyll && npm run git"
   },
   "dependencies": {
-    "aframe": "^1.6.0",
     "cors": "^2.8.5",
-    "mind-ar": "^1.2.5",
     "next": "15.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

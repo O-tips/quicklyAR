@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { QRCodeSVG } from "qrcode.react"; // 名前付きインポートに変更
 import Header from "../components/Header";
 import FileUploadButton from "../components/FileUploadButton";
-import Button from "../components/Button";
-import "./styles.css";
+import Button from '../components/Button';
+import './styles.css';
 
 // async function fetchEventId() {
 //   const response = await fetch(
@@ -52,35 +52,7 @@ export default function Page() {
           method: "POST",
           body: formData,
         }
-      );
-
-      if (response.ok) {
-        const responseData = await response.json();
-        const baseUrl =
-          process.env.REACT_APP_BASE_URL || "http://localhost:3000";
-        const query = new URLSearchParams({
-          id: responseData,
-        }).toString();
-        const eventUrl = `${baseUrl}/event?${query}`;
-        const testUrl = `${baseUrl}/test?${query}`;
-        setMessage(`Success: ${eventUrl}`);
-        setQrUrl(eventUrl); // QRコードURLを設定
-      } else {
-        const responseBody = await response.text();
-        console.error(
-          "Failed to upload files:",
-          response.statusText,
-          responseBody
-        );
-        setMessage("もう一度試してください");
-      }
-    } catch (error: any) {
-      console.error("Error uploading files:", error);
-      setMessage("ネットワークエラーが発生しました。もう一度試してください。");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
 
   const handleResetClick = () => {
     setMarkerFile(null);
@@ -88,6 +60,12 @@ export default function Page() {
     setMessage(null);
     setQrUrl(null); // QRコードURLをリセット
   };
+    const handleResetClick = () => {
+        setMarkerFile(null);
+        setModelFile(null);
+        setMessage(null);
+        setQrUrl(null);  // QRコードURLをリセット
+    };
 
   return (
     <div className="container">
