@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from 'path';
 
 const nextConfig: NextConfig = {
   basePath: process.env.NODE_ENV === "production" ? "/quicklyAR" : "",
@@ -14,8 +15,17 @@ const nextConfig: NextConfig = {
       };
     }
 
-    // 他のWebpack設定が必要なら追加
-    // 例えば、特定のモジュールを外部化する設定など
+    // エイリアスの設定
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
+      '@src': path.resolve(__dirname, 'src'),
+      '@app': path.resolve(__dirname, 'src/app'),
+      '@eventcomponents': path.resolve(__dirname, 'src/app/event/components'),
+      '@next': path.resolve(__dirname, 'next'),
+      '@event': path.resolve(__dirname, 'src/app/event')
+    };
 
     return config;
   },

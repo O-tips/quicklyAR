@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import './Header.css'; // ヘッダー用のスタイルシートをインポート
+import '@styles/Header.css'; // ヘッダー用のスタイルシートをインポート
 
 const Header: React.FC = () => {
   return (

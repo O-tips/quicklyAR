@@ -4,13 +4,13 @@
 // App.tsx
 import React, { useEffect, useState } from "react";
 // import ARScene from "./components/ARScene";
-import ScreenshotDisplay from "./components/ScreenshotDisplay";
-import Footer from "./components/Footer";
-import "../styles.css";
+import ScreenshotDisplay from "@eventcomponents/ScreenshotDisplay";
+import Footer from "@eventcomponents/Footer";
+import "@event/styles.css";
 // import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 
-const ARScene = dynamic(() => import("./components/ARScene"), { ssr: false });
+const ARScene = dynamic(() => import("@eventcomponents/ARScene"), { ssr: false });
 
 function App() {
   // const searchParams = useSearchParams();

@@ -1,11 +1,14 @@
-const path = require("path");
+// next.config.js
+const path = require('path');
 
 module.exports = {
-  // 他の設定
-  resolve: {
-    alias: {
-      '@components': path.resolve(__dirname, 'src/components/'),
-      '@styles': path.resolve(__dirname, 'src/styles/'),
-    },
+  webpack(config) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@styles': path.resolve(__dirname, 'src/styles'),
+      '@src': path.resolve(__dirname, 'src'),
+    };
+    return config;
   },
 };
