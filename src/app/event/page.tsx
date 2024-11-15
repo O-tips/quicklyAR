@@ -4,8 +4,8 @@
 // App.tsx
 import React, { useEffect, useState } from "react";
 // import ARScene from "./components/ARScene";
-import ScreenshotDisplay from "@eventcomponents/ScreenshotDisplay";
-import Footer from "@eventcomponents/Footer";
+// import ScreenshotDisplay from "@eventcomponents/ScreenshotDisplay";
+// import Footer from "@eventcomponents/Footer";
 import "@styles/styles.css";
 // import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
@@ -83,8 +83,8 @@ function App() {
   return (
     <>
       {isDataLoaded && <ARScene markerUrl={markerUrl} modelUrl={modelUrl} />}
-      <ScreenshotDisplay screenshot={screenshot} />
-      <Footer setScreenshot={setScreenshot} screenshot={screenshot} />
+      {/* <ScreenshotDisplay screenshot={screenshot} /> */}
+      {/* <Footer setScreenshot={setScreenshot} screenshot={screenshot} /> */}
     </>
   );
 }
