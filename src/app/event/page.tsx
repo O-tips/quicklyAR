@@ -1,12 +1,11 @@
-"use client";
-
-// App.tsx
 import React, { useEffect, useState } from "react";
-import ARScene from "./components/ARScene";
+import dynamic from 'next/dynamic';
+import { useSearchParams } from "next/navigation";
 import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import Footer from "./components/Footer";
 import "../styles.css";
-import { useSearchParams } from "next/navigation";
+
+const ARScene = dynamic(() => import('./components/ARScene'), { ssr: false });
 
 function App() {
   const searchParams = useSearchParams();
@@ -15,6 +14,7 @@ function App() {
   const [markerUrl, setMarkerUrl] = useState<string | null>(null);
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,7 +24,6 @@ function App() {
           process.env.NEXT_PUBLIC_API_URL ||
           "https://oshaberi-17c056aaa88b.herokuapp.com";
 
-        // Use Promise.all to fetch marker and model simultaneously
         const [markerResponse, modelResponse] = await Promise.all([
           fetch(`${baseUrl}/marker/${id}`),
           fetch(`${baseUrl}/model/${id}`)
@@ -33,13 +32,11 @@ function App() {
         if (!markerResponse.ok) throw new Error("Marker not found");
         if (!modelResponse.ok) throw new Error("Model not found");
 
-        // Retrieve blobs from both responses
         const [markerBlob, modelBlob] = await Promise.all([
           markerResponse.blob(),
           modelResponse.blob()
         ]);
 
-        // Check for blob sizes and create URLs
         if (markerBlob.size > 0) {
           const markerBlobUrl = URL.createObjectURL(markerBlob);
           setMarkerUrl(markerBlobUrl);
@@ -59,6 +56,7 @@ function App() {
         setIsDataLoaded(true);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("データの取得に失敗しました。もう一度試してください。");
       }
     };
 
@@ -67,6 +65,7 @@ function App() {
 
   return (
     <>
+      {error && <div>{error}</div>}
       {isDataLoaded && <ARScene markerUrl={markerUrl} modelUrl={modelUrl} />}
       <ScreenshotDisplay screenshot={screenshot} />
       <Footer setScreenshot={setScreenshot} screenshot={screenshot} />
