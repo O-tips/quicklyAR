@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import Footer from "./components/Footer";
 import "../styles.css";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 
 const ARScene = dynamic(() => import("./components/ARScene"), { ssr: false });
