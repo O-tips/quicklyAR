@@ -54,6 +54,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   // AR scene event listeners
   useEffect(() => {
     if (!isAFrameLoaded) return;
+    
 
     // A-Frameのロード後に少し遅延させてからsceneElを取得
     const timeoutId = setTimeout(() => {
@@ -147,9 +148,8 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
       <a-assets>
         <a-asset-item
           id="model0"
-          src="https://custom-ar-assets.nyc3.cdn.digitaloceanspaces.com/custom-ar-assets/051bc270-4c07-4ebd-b512-55e29d867d3c/model.glb" // Use the blobUrl after it's set
+          src={blobUrl} // Use the blobUrl after it's set
           // src="assets/models/azarashi3.glb" // Use the blobUrl after it's set
-          // src={blobUrl} // Use the blobUrl after it's set
         ></a-asset-item>
       </a-assets>
 

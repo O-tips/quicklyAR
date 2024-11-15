@@ -56,11 +56,15 @@ function App() {
           modelResponse.blob()
         ]);
 
+
+
         // Check for blob sizes and create URLs
         if (markerBlob.size > 0) {
-          const markerBlobUrl = URL.createObjectURL(markerBlob);
-          setMarkerUrl(markerBlobUrl);
-          console.log("Marker URL:", markerBlobUrl);
+          // const markerBlobUrl = URL.createObjectURL(markerBlob);
+          // setMarkerUrl(markerBlobUrl);
+          // console.log("Marker URL:", markerBlobUrl);
+          const modelUrl = `${baseUrl}/model/${id}`;
+          setModelUrl(modelUrl);
         } else {
           console.error("Marker Blob is empty.");
         }
