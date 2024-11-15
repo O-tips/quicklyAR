@@ -9,6 +9,7 @@ import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import Footer from "./components/Footer";
 import "../styles.css";
 
+
 // クライアントサイドでのみ動作するコンポーネントとしてARSceneを動的インポート
 const ARScene = dynamic(() => import('./components/ARScene'), { ssr: false });
 

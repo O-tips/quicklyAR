@@ -4,11 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 import './custom-types'; // 型定義ファイルをインポート
-import dynamic from 'next/dynamic';
 
-const ClientOnlyComponent = dynamic(() => import('../components/*'), {
-  ssr: false  // SSRを無効化してクライアントサイドでのみ読み込む
-});
 
 interface ARSceneProps {
   markerUrl: string | null;
