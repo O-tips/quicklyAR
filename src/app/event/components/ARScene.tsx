@@ -1,7 +1,20 @@
-import React, { useState, useEffect, useCallback } from "react";
+/* eslint-disable */
+import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
-import './custom-types'; // 型定義ファイルをインポート
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "a-scene": any;
+      "a-assets": any;
+      "a-asset-item": any;
+      "a-camera": any;
+      "a-entity": any;
+      "a-gltf-model": any;
+    }
+  }
+}
 
 interface ARSceneProps {
   markerUrl: string | null;
@@ -12,7 +25,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
-  // A-FrameとMindARの初期化
+  // A-Frame and MindAR initialization
   useEffect(() => {
     const loadAFrame = async () => {
       if (typeof window !== "undefined") {
@@ -26,7 +39,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
     loadAFrame();
   }, []);
 
-  // modelUrlが変更されたときにBlob URLを生成
+  // Handle modelUrl changes and create a Blob URL
   useEffect(() => {
     if (modelUrl) {
       fetch(modelUrl)
@@ -40,7 +53,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
           console.error("Error fetching the model:", error);
         });
 
-      // コンポーネントのアンマウント時またはmodelUrlの変更時にBlob URLをクリーンアップ
+      // Cleanup the blob URL when the component unmounts or modelUrl changes
       return () => {
         if (blobUrl) {
           URL.revokeObjectURL(blobUrl);
@@ -50,28 +63,9 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
     }
   }, [modelUrl]);
 
-  // updateModel関数をuseCallbackでメモ化
-  const updateModel = useCallback(() => {
-    console.log("Updating model");
-
-    const models = [document.querySelector("#model0")];
-
-    models.forEach((model, idx) => {
-      const isVisible = idx === 0;
-      if (model != null) {
-        model.setAttribute("visible", isVisible ? "true" : "false");
-        console.log(`Model ${idx} visibility: ${isVisible}`);
-      }
-    });
-
-    move();
-
-    const photoFrameOverlay = document.getElementById("photo-frame-overlay");
-    if (photoFrameOverlay) photoFrameOverlay.style.display = "block";
-  }, []); // `updateModel`依存関係なし
-
+  // AR scene event listeners
   useEffect(() => {
-    if (!isAFrameLoaded || !markerUrl || !blobUrl) return;
+    if (!isAFrameLoaded) return;
 
     const sceneEl = document.querySelector("a-scene");
 
@@ -103,9 +97,29 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         sceneEl.removeEventListener("targetLost", onTargetLost);
       }
     };
-  }, [updateModel, isAFrameLoaded, markerUrl, blobUrl]); // `updateModel`を依存関係に追加
+  }, [isAFrameLoaded]);
+
+  const updateModel = () => {
+    console.log("Updating model");
+
+    const models = [document.querySelector("#model0")];
+
+    models.forEach((model, idx) => {
+      const isVisible = idx === 0;
+      if (model != null) {
+        model.setAttribute("visible", isVisible ? "true" : "false");
+        console.log(`Model ${idx} visibility: ${isVisible}`);
+      }
+    });
+
+    move();
+
+    const photoFrameOverlay = document.getElementById("photo-frame-overlay");
+    if (photoFrameOverlay) photoFrameOverlay.style.display = "block";
+  };
 
   const move = () => {
+    const penguin = document.querySelector("#model0");
     let position = 0;
     const speed = 0.001;
     let direction = 1;
