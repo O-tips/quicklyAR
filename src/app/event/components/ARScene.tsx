@@ -64,6 +64,24 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   }, [modelUrl]);
 
   // AR scene event listeners
+  const updateModel = () => {
+    console.log("Updating model");
+
+    const models = [document.querySelector("#model0")];
+
+    models.forEach((model, idx) => {
+      const isVisible = idx === 0;
+      if (model != null) {
+        model.setAttribute("visible", isVisible ? "true" : "false");
+        console.log(`Model ${idx} visibility: ${isVisible}`);
+      }
+    });
+
+    move();
+
+    const photoFrameOverlay = document.getElementById("photo-frame-overlay");
+    if (photoFrameOverlay) photoFrameOverlay.style.display = "block";
+  };
   useEffect(() => {
     if (!isAFrameLoaded) return;
 
@@ -97,26 +115,8 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         sceneEl.removeEventListener("targetLost", onTargetLost);
       }
     };
-  }, [isAFrameLoaded]);
+  }, [updateModel, isAFrameLoaded]);
 
-  const updateModel = () => {
-    console.log("Updating model");
-
-    const models = [document.querySelector("#model0")];
-
-    models.forEach((model, idx) => {
-      const isVisible = idx === 0;
-      if (model != null) {
-        model.setAttribute("visible", isVisible ? "true" : "false");
-        console.log(`Model ${idx} visibility: ${isVisible}`);
-      }
-    });
-
-    move();
-
-    const photoFrameOverlay = document.getElementById("photo-frame-overlay");
-    if (photoFrameOverlay) photoFrameOverlay.style.display = "block";
-  };
 
   const move = () => {
     const penguin = document.querySelector("#model0");
