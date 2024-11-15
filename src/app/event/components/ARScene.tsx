@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
