@@ -10,7 +10,7 @@ import "@styles/styles.css";
 // import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import '@app/custom-types';
-import ARScene from '@eventcomponents/ARScene'; 
+// import ARScene from '@eventcomponents/ARScene'; 
 // import '../custom-types'
 
 // @ts-ignore
