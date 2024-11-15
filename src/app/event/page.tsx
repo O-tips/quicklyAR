@@ -1,22 +1,14 @@
 /* eslint-disable */
 "use client";
 
-// App.tsx
 import React, { useEffect, useState } from "react";
-// import ARScene from "./components/ARScene";
-// import ScreenshotDisplay from "@eventcomponents/ScreenshotDisplay";
-// import Footer from "@eventcomponents/Footer";
 import "@styles/styles.css";
-// import { useSearchParams } from "next/navigation";
 import { ARSceneProps } from '@eventcomponents/custom-types';
 import dynamic from 'next/dynamic';
 
 const ARScene = dynamic(() => import('@eventcomponents/ARScene').then((mod) => mod.default), { ssr: false });
 
-
 function App() {
-  // const searchParams = useSearchParams();
-  // const id = searchParams.get("id");
   const [id, setId] = useState<string | null>(null);
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [markerUrl, setMarkerUrl] = useState<string | null>(null);
@@ -44,7 +36,7 @@ function App() {
         // Use Promise.all to fetch marker and model simultaneously
         const [markerResponse, modelResponse] = await Promise.all([
           fetch(`${baseUrl}/marker/${id}`),
-          fetch(`${baseUrl}/model/${id}`)
+          fetch(`https://custom-ar-assets.nyc3.digitaloceanspaces.com/custom-ar-assets/${id}/model.glb`) // Updated URL
         ]);
 
         if (!markerResponse.ok) throw new Error("Marker not found");
@@ -55,8 +47,6 @@ function App() {
           markerResponse.blob(),
           modelResponse.blob()
         ]);
-
-
 
         // Check for blob sizes and create URLs
         if (markerBlob.size > 0) {
@@ -81,7 +71,10 @@ function App() {
       }
     };
 
-    fetchData();
+    if (id) {
+      // `id`が取得された後にmodelUrlを更新
+      fetchData();
+    }
   }, [id]);
 
   return (

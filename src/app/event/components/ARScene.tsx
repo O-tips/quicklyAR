@@ -12,6 +12,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
+
   // A-Frame and MindAR initialization
   useEffect(() => {
     const loadAFrame = async () => {
@@ -27,29 +28,30 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   }, []);
 
   // Handle modelUrl changes and create a Blob URL
-  useEffect(() => {
-    if (modelUrl) {
-      fetch(modelUrl)
-        .then((response) => response.blob())
-        .then((blob) => {
-          const newBlobUrl = URL.createObjectURL(blob);
-          setBlobUrl(newBlobUrl);
-          console.log("newBlobUrl : " + newBlobUrl)
-          console.log("Blob URL created:", newBlobUrl);
-        })
-        .catch((error) => {
-          console.error("Error fetching the model:", error);
-        });
+  // useEffect(() => {
+  //   if (modelUrl) {
+  //     fetch(modelUrl)
+  //       .then((response) => response.blob())
+  //       .then((blob) => {
+  //         const newBlobUrl = URL.createObjectURL(blob);
 
-      // Cleanup the blob URL when the component unmounts or modelUrl changes
-      return () => {
-        if (blobUrl) {
-          URL.revokeObjectURL(blobUrl);
-          console.log("Blob URL revoked");
-        }
-      };
-    }
-  }, [modelUrl]);
+  //         setBlobUrl(newBlobUrl);
+  //         console.log("newBlobUrl : " + newBlobUrl)
+  //         console.log("Blob URL created:", newBlobUrl);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching the model:", error);
+  //       });
+
+  //     // Cleanup the blob URL when the component unmounts or modelUrl changes
+  //     return () => {
+  //       if (blobUrl) {
+  //         URL.revokeObjectURL(blobUrl);
+  //         console.log("Blob URL revoked");
+  //       }
+  //     };
+  //   }
+  // }, [modelUrl]);
 
   // AR scene event listeners
   useEffect(() => {
@@ -149,6 +151,8 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         <a-asset-item
           id="model0"
           src={blobUrl} // Use the blobUrl after it's set
+          // src="https://custom-ar-assets.nyc3.digitaloceanspaces.com/custom-ar-assets/${id}/model.glb" // Use the blobUrl after it's set
+          // src="https://custom-ar-assets.nyc3.cdn.digitaloceanspaces.com/custom-ar-assets/4565bd70-ddda-49e4-ba7f-9eaeb7a47f66/model.glb" // Use the blobUrl after it's set
           // src="assets/models/azarashi3.glb" // Use the blobUrl after it's set
         ></a-asset-item>
       </a-assets>
