@@ -1,1 +1,1 @@
-web: npx serve@latest out
+web: node server.js
