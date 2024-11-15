@@ -4,9 +4,13 @@ import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 import '@eventcomponents/custom-types'
 
+// interface ARSceneProps {
+//   markerUrl: string | null;
+//   modelUrl: string | null;
+// }
 interface ARSceneProps {
-  markerUrl: string | null;
-  modelUrl: string | null;
+  markerUrl: string;
+  modelUrl: string;
 }
 
 const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
