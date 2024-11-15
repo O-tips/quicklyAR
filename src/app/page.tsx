@@ -137,7 +137,7 @@ export default function Page() {
         <div className="qr-container">
           {/* <QRCode value={qrUrl} size={256} /> */}
           <QRCodeSVG
-            value="https://ja.wikipedia.org/wiki/%E9%98%BF%E9%83%A8%E5%AF%9B"
+            value={qrUrl}
             size={256}
           />
           <p>QR Code for the event URL</p>
