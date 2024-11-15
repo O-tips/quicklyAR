@@ -14,13 +14,14 @@
     "qrcode.react": "^4.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.28.0",
+    "three-dev": "^0.74.0-beta8"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "aframe": "^0.1.3",
+    "aframe": "^1.6.0",
     "cors": "^2.8.5",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
