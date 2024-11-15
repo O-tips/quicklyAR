@@ -2,16 +2,13 @@
 import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
-import '@eventcomponents/custom-types'
+// import '@eventcomponents/custom-types'
 
-// interface ARSceneProps {
-//   markerUrl: string | null;
-//   modelUrl: string | null;
-// }
 interface ARSceneProps {
-  markerUrl: string;
-  modelUrl: string;
+  markerUrl: string | null;
+  modelUrl: string | null;
 }
+
 
 const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
