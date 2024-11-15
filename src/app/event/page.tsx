@@ -9,11 +9,13 @@ import React, { useEffect, useState } from "react";
 import "@styles/styles.css";
 // import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import '@app/custom-types'
+import '@app/custom-types';
+import ARScene from '@eventcomponents/ARScene'; 
 // import '../custom-types'
 
 // @ts-ignore
-const ARScene = dynamic(() => import("@eventcomponents/ARScene"), { ssr: false });
+// const ARScene = dynamic(() => import("@eventcomponents/ARScene"), { ssr: false });
+const ARScene = dynamic<React.FC<ARSceneProps>>(() => import("@eventcomponents/ARScene"), { ssr: false });
 
 function App() {
   // const searchParams = useSearchParams();
