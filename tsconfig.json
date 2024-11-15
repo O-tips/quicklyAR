@@ -25,7 +25,8 @@
       "@eventcomponents/*": ["src/app/event/components/*"],
       "@src/*": ["src/*"],
       "@styles/*": ["src/styles/*"],
-      "@event/*": ["src/app/event/*"]
+      "@event/*": ["src/app/event/*"],
+      "@public/*": ["public/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

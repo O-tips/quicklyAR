@@ -25,7 +25,8 @@ const nextConfig: NextConfig = {
       '@src': path.resolve(__dirname, 'src'),
       '@app': path.resolve(__dirname, 'src/app'),
       '@eventcomponents': path.resolve(__dirname, 'src/app/event/components'),
-      '@event': path.resolve(__dirname, 'src/app/event')
+      '@event': path.resolve(__dirname, 'src/app/event'),
+      '@public': path.resolve(__dirname, 'public')
     };
     return config;
   },

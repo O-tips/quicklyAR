@@ -147,7 +147,8 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
       <a-assets>
         <a-asset-item
           id="model0"
-          src={blobUrl} // Use the blobUrl after it's set
+          src="@public/assets/models/azarashi3.glb" // Use the blobUrl after it's set
+          // src={blobUrl} // Use the blobUrl after it's set
         ></a-asset-item>
       </a-assets>
 
