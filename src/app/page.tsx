@@ -60,7 +60,8 @@ export default function Page() {
         const responseData = await response.json();
         const baseUrl =
           process.env.NEXT_PUBLIC_API_URL ||
-          "https://oshaberi-17c056aaa88b.herokuapp.com";
+          "https://quicklyar-6bb17adb8be1.herokuapp.com";
+          // "https://oshaberi-17c056aaa88b.herokuapp.com";
         const query = new URLSearchParams({
           id: responseData,
         }).toString();
