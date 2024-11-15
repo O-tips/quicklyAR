@@ -26,6 +26,11 @@ declare global {
         'src'?: string;
         'visible'?: string;
       };
+      "ARScene": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
+        'markerUrl'?: string;
+     };
+ 
     }
+    
   }
 }
