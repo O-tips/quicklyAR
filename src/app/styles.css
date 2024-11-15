@@ -25,3 +25,21 @@ h2, h3 {
 .link {
   color: #3a859e;
 }
+
+.message {
+  font-size: 1em;
+  margin-top: 1em;
+}
+
+.message.success {
+  color: green;
+}
+
+.message.error {
+  color: red;
+}
+
+.loading-message {
+  color: blue;
+  font-style: italic;
+}
