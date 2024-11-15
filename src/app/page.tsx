@@ -62,6 +62,7 @@ export default function Page() {
           id: responseData,
         }).toString();
         const eventUrl = `${baseUrl}/event?${query}`;
+        const testUrl = `${baseUrl}/test?${query}`;
         setMessage(`Success: ${eventUrl}`);
         setQrUrl(eventUrl); // QRコードURLを設定
       } else {

@@ -69,7 +69,7 @@ function App() {
     <>
       {isDataLoaded && <ARScene markerUrl={markerUrl} modelUrl={modelUrl} />}
       <ScreenshotDisplay screenshot={screenshot} />
-      <Footer setScreenshot={setScreenshot} screenshot={screenshot} />
+      {/* <Footer setScreenshot={setScreenshot} screenshot={screenshot} /> */}
     </>
   );
 }
