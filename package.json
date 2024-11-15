@@ -31,5 +31,8 @@
     "three": "^0.170.0",
     "typescript": "^5"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "homepage": "https://o-tips.github.io/quicklyAR"
 }
