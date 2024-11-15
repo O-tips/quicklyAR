@@ -2,13 +2,11 @@
 import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
-// import '@eventcomponents/custom-types'
 
 interface ARSceneProps {
   markerUrl: string | null;
   modelUrl: string | null;
 }
-
 
 const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
@@ -56,36 +54,43 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   useEffect(() => {
     if (!isAFrameLoaded) return;
 
-    const sceneEl = document.querySelector("a-scene");
+    // A-Frameのロード後に少し遅延させてからsceneElを取得
+    const timeoutId = setTimeout(() => {
+      const sceneEl = document.querySelector("a-scene");
+      console.log("sceneEl", sceneEl);
 
-    const onARReady = () => {
-      console.log("MindAR is ready");
-    };
+      const onARReady = () => {
+        console.log("MindAR is ready");
+      };
 
-    const onTargetFound = () => {
-      console.log("Target found");
-      requestAnimationFrame(() => {
-        updateModel();
-      });
-    };
+      const onTargetFound = () => {
+        console.log("Target found");
+        requestAnimationFrame(() => {
+          updateModel();
+        });
+      };
 
-    const onTargetLost = () => {
-      console.log("Target lost");
-    };
+      const onTargetLost = () => {
+        console.log("Target lost");
+      };
 
-    if (sceneEl != null) {
-      sceneEl.addEventListener("arReady", onARReady);
-      sceneEl.addEventListener("targetFound", onTargetFound);
-      sceneEl.addEventListener("targetLost", onTargetLost);
-    }
-
-    return () => {
       if (sceneEl != null) {
-        sceneEl.removeEventListener("arReady", onARReady);
-        sceneEl.removeEventListener("targetFound", onTargetFound);
-        sceneEl.removeEventListener("targetLost", onTargetLost);
+        sceneEl.addEventListener("arReady", onARReady);
+        sceneEl.addEventListener("targetFound", onTargetFound);
+        sceneEl.addEventListener("targetLost", onTargetLost);
       }
-    };
+
+      return () => {
+        clearTimeout(timeoutId);
+        if (sceneEl != null) {
+          sceneEl.removeEventListener("arReady", onARReady);
+          sceneEl.removeEventListener("targetFound", onTargetFound);
+          sceneEl.removeEventListener("targetLost", onTargetLost);
+        }
+      };
+    }, 100); // 少し遅延させる
+
+    return () => clearTimeout(timeoutId);
   }, [isAFrameLoaded]);
 
   const updateModel = () => {
@@ -126,7 +131,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
     animate();
   };
 
-  if (!isAFrameLoaded || !blobUrl) {
+  if (!isAFrameLoaded || !blobUrl || !markerUrl || !modelUrl) {
     return <div>Loading A-Frame or Model...</div>;
   }
 
