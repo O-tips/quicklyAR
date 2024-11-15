@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 // import ARScene from "./components/ARScene";
 import ScreenshotDisplay from "@eventcomponents/ScreenshotDisplay";
 import Footer from "@eventcomponents/Footer";
-import "@event/styles.css";
+import "@styles/styles.css";
 // import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 
