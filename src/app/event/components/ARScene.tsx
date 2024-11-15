@@ -4,7 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 import './custom-types'; // 型定義ファイルをインポート
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 
 // const ARScene = dynamic(() => import('./ARScene'), { ssr: false });
 
