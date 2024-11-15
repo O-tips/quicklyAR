@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
-import './custom-types'
+import '@eventcomponents/custom-types'
 
 interface ARSceneProps {
   markerUrl: string | null;
