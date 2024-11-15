@@ -23,7 +23,10 @@
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@app/*": ["src/app/*"],
-      "@eventcomponents/*": ["src/app/event/components/*"]
+      "@eventcomponents/*": ["src/app/event/components/*"],
+      "@src/*": ["src/*"],
+      "@styles/*": ["src/styles/*"],
+      "@event/*": ["src/app/event/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
