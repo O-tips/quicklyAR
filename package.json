@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "git": "git add . && git commit && git push origin main",
-    "heroku-postbuild": "npm install --prefix server"
+    "git": "git add . && git commit && git push origin main"
   },
   "dependencies": {
     "express": "^4.21.1",
