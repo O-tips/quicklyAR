@@ -1,23 +1,37 @@
+/* eslint-disable */
 "use client";
 
 // App.tsx
 import React, { useEffect, useState } from "react";
-import ARScene from "./components/ARScene";
+// import ARScene from "./components/ARScene";
 import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import Footer from "./components/Footer";
 import "../styles.css";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
+
+const ARScene = dynamic(() => import("./components/ARScene"), { ssr: false });
 
 function App() {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  // const searchParams = useSearchParams();
+  // const id = searchParams.get("id");
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [markerUrl, setMarkerUrl] = useState<string | null>(null);
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
+  const [id, setId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // クライアントサイドでのみ動作
+    if (typeof window !== "undefined") {
+      const searchParams = new URLSearchParams(window.location.search);
+      setId(searchParams.get("id"));
+    }
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!id) return;
       try {
         console.log("Files download : " + id);
         const baseUrl =
@@ -63,7 +77,7 @@ function App() {
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   return (
     <>
