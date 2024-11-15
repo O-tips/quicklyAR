@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import "@styles/styles.css";
 // import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import { ARSceneProps } from '@app/custom-types';
+import { ARSceneProps } from '@eventcomponents/custom-types';
 // import '../custom-types'
 
 const ARScene = dynamic<React.FC<ARSceneProps>>(() => import("@eventcomponents/ARScene"), { ssr: false });
