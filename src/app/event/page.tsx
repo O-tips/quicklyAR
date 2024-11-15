@@ -1,17 +1,15 @@
-// app/event/page.tsx
 "use client";  // クライアントサイドでのみ実行されることを明示する
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import dynamic from 'next/dynamic';  // dynamicインポートをここに配置
+import dynamic from "next/dynamic"; // dynamicインポートをここに配置
 
 import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import Footer from "./components/Footer";
 import "../styles.css";
 
-
 // クライアントサイドでのみ動作するコンポーネントとしてARSceneを動的インポート
-const ARScene = dynamic(() => import('./components/ARScene'), { ssr: false });
+const ARScene = dynamic(() => import("./components/ARScene"), { ssr: false });
 
 function App() {
   const searchParams = useSearchParams();
@@ -72,7 +70,12 @@ function App() {
   return (
     <>
       {error && <div>{error}</div>}
-      {isDataLoaded && <ARScene markerUrl={markerUrl} modelUrl={modelUrl} />}
+      
+      {/* SuspenseでARSceneをラップ */}
+      <Suspense fallback={<div>ARシーンを読み込み中...</div>}>
+        {isDataLoaded && <ARScene markerUrl={markerUrl} modelUrl={modelUrl} />}
+      </Suspense>
+
       <ScreenshotDisplay screenshot={screenshot} />
       <Footer setScreenshot={setScreenshot} screenshot={screenshot} />
     </>
