@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { QRCodeSVG } from "qrcode.react"; // 名前付きインポートに変更
 import Header from "@components/Header";
 // import FileUploadButton from "@components/FileUploadButton";
-import FileUploadButton from "../components/FileUploadButton";
+import FileUploadButton from "@components/FileUploadButton";
 import Button from "@components/Button";
 // import Button from "../components/Button";
 import "@styles/styles.css";
