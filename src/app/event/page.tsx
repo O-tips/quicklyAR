@@ -1,10 +1,15 @@
+// app/event/page.tsx
+"use client";  // クライアントサイドでのみ実行されることを明示する
+
 import React, { useEffect, useState } from "react";
-import dynamic from 'next/dynamic';
 import { useSearchParams } from "next/navigation";
+import dynamic from 'next/dynamic';  // dynamicインポートをここに配置
+
 import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import Footer from "./components/Footer";
 import "../styles.css";
 
+// クライアントサイドでのみ動作するコンポーネントとしてARSceneを動的インポート
 const ARScene = dynamic(() => import('./components/ARScene'), { ssr: false });
 
 function App() {
