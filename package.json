@@ -2,11 +2,11 @@
   "name": "quickly_ar",
   "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "git": "git add . && git commit && git push origin main"
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start -p $PORT",
+  "git": "git add . && git commit && git push origin main"
   },
   "dependencies": {
     "cors": "^2.8.5",
