@@ -62,7 +62,6 @@ export default function Page() {
           id: responseData,
         }).toString();
         const eventUrl = `${baseUrl}/event?${query}`;
-        const testUrl = `${baseUrl}/test?${query}`;
         setMessage(`Success: ${eventUrl}`);
         setQrUrl(eventUrl); // QRコードURLを設定
       } else {
@@ -74,7 +73,7 @@ export default function Page() {
         );
         setMessage("もう一度試してください");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error uploading files:", error);
       setMessage("ネットワークエラーが発生しました。もう一度試してください。");
     } finally {

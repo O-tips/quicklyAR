@@ -2,15 +2,16 @@ import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 
+// グローバル型宣言の修正
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "a-scene": any;
-      "a-assets": any;
-      "a-asset-item": any;
-      "a-camera": any;
-      "a-entity": any;
-      "a-gltf-model": any;
+      "a-scene": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      "a-assets": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      "a-asset-item": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      "a-camera": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      "a-entity": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      "a-gltf-model": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
     }
   }
 }
