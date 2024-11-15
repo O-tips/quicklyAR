@@ -5,7 +5,7 @@ declare module 'react' {
     "a-scene": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
       'mindar-image'?: string;
       'color-space'?: string;
-      'renderer'?: string;
+      'renderer'?: string;  // Added this line to include the 'renderer' attribute
       'vr-mode-ui'?: string;
       'device-orientation-permission-ui'?: string;
     };
