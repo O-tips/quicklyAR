@@ -58,7 +58,7 @@ export default function Page() {
       if (response.ok) {
         const responseData = await response.json();
         const baseUrl =
-          process.env.REACT_APP_BASE_URL || "http://localhost:3000";
+          process.env.REACT_APP_BASE_URL || "https://o-tips.github.io/quicklyAR/";
         const query = new URLSearchParams({
           id: responseData,
         }).toString();
