@@ -2,11 +2,11 @@
   "name": "quickly_ar",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start -p $PORT",
-  "git": "git add . && git commit && git push origin main"
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start -p $PORT",
+    "git": "git add . && git commit && git push origin main"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -20,6 +20,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "aframe": "^1.6.0",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "gh-pages": "^6.2.0",
