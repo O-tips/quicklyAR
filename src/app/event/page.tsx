@@ -7,8 +7,6 @@ import ScreenshotDisplay from "./components/ScreenshotDisplay";
 import Footer from "./components/Footer";
 import "../styles.css";
 import { useSearchParams } from "next/navigation";
-import { ARSceneProps } from './components/custom-types';
-
 
 function App() {
   const searchParams = useSearchParams();
