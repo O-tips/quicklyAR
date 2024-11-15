@@ -48,7 +48,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         }
       };
     }
-  }, [modelUrl]);
+  }, [modelUrl, blobUrl]);
 
   // updateModel関数をuseCallbackでメモ化
   const updateModel = useCallback(() => {
