@@ -119,7 +119,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
 
 
   const move = () => {
-    const penguin = document.querySelector("#model0");
+    // const penguin = document.querySelector("#model0");
     let position = 0;
     const speed = 0.001;
     let direction = 1;
