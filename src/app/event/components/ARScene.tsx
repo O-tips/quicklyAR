@@ -1,20 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
-
-// グローバル型宣言の修正
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "a-scene": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-assets": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-asset-item": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-camera": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-entity": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-      "a-gltf-model": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-    }
-  }
-}
+import './custom-types'; // 型定義ファイルをインポート
 
 interface ARSceneProps {
   markerUrl: string | null;
@@ -25,7 +12,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
-  // A-Frame and MindAR initialization
+  // A-FrameとMindARの初期化
   useEffect(() => {
     const loadAFrame = async () => {
       if (typeof window !== "undefined") {
@@ -39,7 +26,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
     loadAFrame();
   }, []);
 
-  // Handle modelUrl changes and create a Blob URL
+  // modelUrlが変更されたときにBlob URLを生成
   useEffect(() => {
     if (modelUrl) {
       fetch(modelUrl)
@@ -53,7 +40,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
           console.error("Error fetching the model:", error);
         });
 
-      // Cleanup the blob URL when the component unmounts or modelUrl changes
+      // コンポーネントのアンマウント時またはmodelUrlの変更時にBlob URLをクリーンアップ
       return () => {
         if (blobUrl) {
           URL.revokeObjectURL(blobUrl);
@@ -63,8 +50,8 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
     }
   }, [modelUrl]);
 
-  // AR scene event listeners
-  const updateModel = () => {
+  // updateModel関数をuseCallbackでメモ化
+  const updateModel = useCallback(() => {
     console.log("Updating model");
 
     const models = [document.querySelector("#model0")];
@@ -81,7 +68,8 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
 
     const photoFrameOverlay = document.getElementById("photo-frame-overlay");
     if (photoFrameOverlay) photoFrameOverlay.style.display = "block";
-  };
+  }, []); // `updateModel`依存関係なし
+
   useEffect(() => {
     if (!isAFrameLoaded) return;
 
@@ -115,11 +103,9 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         sceneEl.removeEventListener("targetLost", onTargetLost);
       }
     };
-  }, [updateModel, isAFrameLoaded]);
-
+  }, [updateModel, isAFrameLoaded]); // `updateModel`を依存関係に追加
 
   const move = () => {
-    // const penguin = document.querySelector("#model0");
     let position = 0;
     const speed = 0.001;
     let direction = 1;
