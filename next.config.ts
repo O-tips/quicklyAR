@@ -2,8 +2,10 @@ import type { NextConfig } from "next";
 import path from 'path';
 
 const nextConfig: NextConfig = {
-  basePath: process.env.NODE_ENV === "production" ? "/quicklyAR" : "",
-  assetPrefix: process.env.NODE_ENV === "production" ? "/quicklyAR/" : "",
+  // basePath: process.env.NODE_ENV === "production" ? "/quicklyAR" : "",
+  // assetPrefix: process.env.NODE_ENV === "production" ? "/quicklyAR/" : "",
+  basePath: process.env.NODE_ENV === "production" ? "" : "",
+  assetPrefix: process.env.NODE_ENV === "production" ? "/" : "",
   output: "export",
 
   webpack: (config, { isServer }) => {
