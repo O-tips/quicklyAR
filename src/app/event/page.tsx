@@ -8,11 +8,11 @@ import React, { useEffect, useState } from "react";
 // import Footer from "@eventcomponents/Footer";
 import "@styles/styles.css";
 // import { useSearchParams } from "next/navigation";
-import dynamic from "next/dynamic";
 import { ARSceneProps } from '@eventcomponents/custom-types';
-// import '../custom-types'
+import dynamic from 'next/dynamic';
 
-const ARScene = dynamic<React.FC<ARSceneProps>>(() => import("@eventcomponents/ARScene"), { ssr: false });
+const ARScene = dynamic(() => import('@eventcomponents/ARScene').then((mod) => mod.default), { ssr: false });
+
 
 function App() {
   // const searchParams = useSearchParams();

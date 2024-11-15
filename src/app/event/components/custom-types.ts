@@ -29,3 +29,7 @@ declare module 'react' {
     };
   }
 }
+
+export interface ARSceneProps {
+  markerUrl?: string;
+}
