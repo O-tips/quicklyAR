@@ -59,7 +59,8 @@ export default function Page() {
       if (response.ok) {
         const responseData = await response.json();
         const baseUrl =
-          process.env.REACT_APP_BASE_URL || "http://localhost:3000";
+          process.env.NEXT_PUBLIC_API_URL ||
+          "https://oshaberi-17c056aaa88b.herokuapp.com";
         const query = new URLSearchParams({
           id: responseData,
         }).toString();
