@@ -5,11 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "mv": "mv out docs",
-    "rm": "rm -rf docs",
-    "export": "next export",
-    "git": "git add . && git commit && git push origin main",
-    "deploy": "npm run rm && npm run build && npm run mv && touch docs/.nojekyll && npm run git"
+    "start": "next start",
+    "git": "git add . && git commit && git push origin main"
   },
   "dependencies": {
     "cors": "^2.8.5",
