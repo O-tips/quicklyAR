@@ -1,10 +1,7 @@
-// ARScene.tsx
-
 import React, { useState, useEffect, useCallback } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 import './custom-types'; // 型定義ファイルをインポート
-
 
 interface ARSceneProps {
   markerUrl: string | null;
@@ -51,7 +48,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         }
       };
     }
-  }, [modelUrl, blobUrl]);
+  }, [modelUrl]);
 
   // updateModel関数をuseCallbackでメモ化
   const updateModel = useCallback(() => {
@@ -74,7 +71,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   }, []); // `updateModel`依存関係なし
 
   useEffect(() => {
-    if (!isAFrameLoaded) return;
+    if (!isAFrameLoaded || !markerUrl || !blobUrl) return;
 
     const sceneEl = document.querySelector("a-scene");
 
@@ -106,7 +103,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         sceneEl.removeEventListener("targetLost", onTargetLost);
       }
     };
-  }, [updateModel, isAFrameLoaded]); // `updateModel`を依存関係に追加
+  }, [updateModel, isAFrameLoaded, markerUrl, blobUrl]); // `updateModel`を依存関係に追加
 
   const move = () => {
     let position = 0;
