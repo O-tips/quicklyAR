@@ -2,19 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
-
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "a-scene": any;
-      "a-assets": any;
-      "a-asset-item": any;
-      "a-camera": any;
-      "a-entity": any;
-      "a-gltf-model": any;
-    }
-  }
-}
+import './custom-types'
 
 interface ARSceneProps {
   markerUrl: string | null;
