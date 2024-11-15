@@ -18,13 +18,13 @@ const nextConfig: NextConfig = {
     // エイリアスの設定
     config.resolve.alias = {
       ...config.resolve.alias,
+      '@next': path.resolve(__dirname, 'next'),
+      '@src': path.resolve(__dirname, 'src'),
       '@components': path.resolve(__dirname, 'src/components'),
       '@styles': path.resolve(__dirname, 'src/styles'),
-      '@src': path.resolve(__dirname, 'src'),
       '@app': path.resolve(__dirname, 'src/app'),
-      '@eventcomponents': path.resolve(__dirname, 'src/app/event/components'),
-      '@next': path.resolve(__dirname, 'next'),
-      '@event': path.resolve(__dirname, 'src/app/event')
+      '@event': path.resolve(__dirname, 'src/app/event'),
+      '@eventcomponents': path.resolve(__dirname, 'src/app/event/components')
     };
 
     return config;
