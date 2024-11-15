@@ -10,6 +10,7 @@ import "@styles/styles.css";
 // import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 
+// @ts-ignore
 const ARScene = dynamic(() => import("@eventcomponents/ARScene"), { ssr: false });
 
 function App() {
