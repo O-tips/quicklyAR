@@ -13,7 +13,8 @@ const ARScene = dynamic(() => import("./components/ARScene"), { ssr: false });
 
 function App() {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = searchParams ? searchParams.get("id") : null;  // クライアントサイドのみで取得
+
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [markerUrl, setMarkerUrl] = useState<string | null>(null);
   const [modelUrl, setModelUrl] = useState<string | null>(null);
@@ -22,6 +23,8 @@ function App() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!id) return;
+
       try {
         console.log("Files download : " + id);
         const baseUrl =
