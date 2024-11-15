@@ -34,6 +34,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         .then((blob) => {
           const newBlobUrl = URL.createObjectURL(blob);
           setBlobUrl(newBlobUrl);
+          console.log("newBlobUrl : " + newBlobUrl)
           console.log("Blob URL created:", newBlobUrl);
         })
         .catch((error) => {
