@@ -9,13 +9,16 @@
     "git": "git add . && git commit && git push origin main"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.7",
+    "cors": "^2.8.5",
     "express": "^4.21.1",
     "next": "15.0.3",
     "qrcode.react": "^4.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.28.0",
-    "cors": "^2.8.5",
     "three-dev": "^0.74.0-beta8"
   },
   "devDependencies": {

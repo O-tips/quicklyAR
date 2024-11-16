@@ -13,6 +13,7 @@ function App() {
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
 
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       const searchParams = new URLSearchParams(window.location.search);
@@ -39,10 +40,30 @@ function App() {
     }
   }, [id]);
 
+
+
+  
+  // const clickableArea = document.getElementById('clickable-area');
+  
+  // clickableArea.addEventListener('click', function() {
+  //   if (fortuneDialog && fortuneDetails) {
+  //     fortuneText.textContent = fortuneTexts[randInt];
+  //     fortuneDetails.textContent = fortuneDescriptions[randInt];
+  //     fortuneDialog.showModal();
+  //     console.log("Fortune dialog shown");
+  //   } else {
+  //     console.error("Fortune dialog or details element not found");
+  //   }
+  // });
+
+
+
   return (
     <>
       {isDataLoaded ? (
-        <ARScene markerUrl={markerUrl} modelUrl={modelUrl} />
+        <>
+          <ARScene markerUrl={markerUrl} modelUrl={modelUrl} />
+        </>
       ) : (
         <div>Loading AR scene...</div>
       )}
