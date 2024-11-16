@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
-// import "@eventcomponent/styles.css";
 
 interface ARSceneProps {
   markerUrl: string | null;
@@ -12,93 +11,68 @@ interface ARSceneProps {
 const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
 
-  // A-FrameとMindARの初期化
   useEffect(() => {
     const loadAFrame = async () => {
       if (typeof window !== "undefined") {
         await import("aframe");
         await import("mind-ar/dist/mindar-image-aframe.prod.js");
         setIsAFrameLoaded(true);
-        console.log("A-Frame and MindAR initialized");
       }
     };
 
     loadAFrame();
   }, []);
 
-  // AR sceneイベントリスナー
   useEffect(() => {
     if (!isAFrameLoaded) return;
 
     const timeoutId = setTimeout(() => {
-      const sceneEl = document.querySelector("a-scene");
-      console.log("sceneEl", sceneEl);
+      const videoElement = document.querySelector("video");
+      if (videoElement) {
+        videoElement.style.position = "absolute";
+        videoElement.style.top = "0";
+        videoElement.style.left = "0";
+        videoElement.style.width = "100vw";
+        videoElement.style.height = "100vh";
+        videoElement.style.objectFit = "cover";
+        videoElement.style.zIndex = "-2";
 
-      if (sceneEl) {
-        const onARReady = () => console.log("MindAR is ready");
-        const onTargetFound = () => {
-          console.log("Target found");
-          updateModel();
-        };
-        const onTargetLost = () => console.log("Target lost");
+        // シェーダーに渡すサイズの計算
+        const videoWidth = parseFloat(videoElement.style.width);
+        const videoHeight = parseFloat(videoElement.style.height);
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
 
-        sceneEl.addEventListener("arReady", onARReady);
-        sceneEl.addEventListener("targetFound", onTargetFound);
-        sceneEl.addEventListener("targetLost", onTargetLost);
+        const sizeX = videoWidth / windowWidth;
+        const sizeY = videoHeight / windowHeight;
 
-        return () => {
-          sceneEl.removeEventListener("arReady", onARReady);
-          sceneEl.removeEventListener("targetFound", onTargetFound);
-          sceneEl.removeEventListener("targetLost", onTargetLost);
-        };
+        // `uniforms` にサイズを設定
+        const sceneEl = document.querySelector("a-scene");
+        if (sceneEl) {
+          sceneEl.setAttribute("uniforms", JSON.stringify({ _size: { x: sizeX, y: sizeY } }));
+        }
+      } else {
+        console.log("Video element not found");
       }
-    }, 100);
+    }, 500);
 
     return () => clearTimeout(timeoutId);
   }, [isAFrameLoaded]);
 
-  useEffect(() => {
-    console.log("change width");
-    const videoElement = document.querySelector("video");
-    if (videoElement) {
-      videoElement.style.position = "absolute";
-      videoElement.style.top = "0";
-      videoElement.style.left = "0";
-      videoElement.style.width = "100vw";
-      videoElement.style.height = "100vh";
-      videoElement.style.objectFit = "cover";
-      videoElement.style.zIndex = "-2";
-    }
-  }, [isAFrameLoaded]);
-
   const updateModel = () => {
-    console.log("Updating model");
     const model = document.querySelector("#model0");
     if (model) {
       model.setAttribute("visible", "true");
-      console.log("Model visibility updated to true");
     }
-
-    const photoFrameOverlay = document.getElementById("photo-frame-overlay");
-    if (photoFrameOverlay) photoFrameOverlay.style.display = "block";
   };
 
   if (!isAFrameLoaded || !markerUrl || !modelUrl) {
     return <div>Loading A-Frame or Model...</div>;
   }
 
-  
-
   return (
     <a-scene
-      style={{
-        width: "100vw",
-        height: "100vh",
-        display: "block",
-        margin: "0",
-        padding: "0",
-        overflow: "hidden",
-      }}
+      className="fullscreen-scene"
       mindar-image={`imageTargetSrc: ${markerUrl};`}
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
@@ -106,10 +80,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
       device-orientation-permission-ui="enabled: false"
     >
       <a-assets>
-        <a-asset-item
-          id="model0"
-          src={modelUrl}
-        ></a-asset-item>
+        <a-asset-item id="model0" src={modelUrl}></a-asset-item>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
