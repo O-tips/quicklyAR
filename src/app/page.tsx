@@ -3,10 +3,12 @@
 
 import React, { useState } from "react";
 import { QRCodeSVG } from "qrcode.react"; // 名前付きインポートに変更
-import Header from "../components/Header";
-import FileUploadButton from "../components/FileUploadButton";
-import Button from "../components/Button";
-import "./styles.css";
+import Header from "@components/Header";
+// import FileUploadButton from "@components/FileUploadButton";
+import FileUploadButton from "@components/FileUploadButton";
+import Button from "@components/Button";
+// import Button from "../components/Button";
+import "@styles/styles.css";
 
 // async function fetchEventId() {
 //   const response = await fetch(
@@ -57,12 +59,13 @@ export default function Page() {
 
       if (response.ok) {
         const responseData = await response.json();
-        const baseUrl = "https://o-tips.github.io/quicklyAR/";
+        const baseUrl =
+          process.env.NEXT_PUBLIC_API_URL ||
+          "https://quicklyar-6bb17adb8be1.herokuapp.com";
         const query = new URLSearchParams({
           id: responseData,
         }).toString();
         const eventUrl = `${baseUrl}/event?${query}`;
-        const testUrl = `${baseUrl}/test?${query}`;
         setMessage(`Success: ${eventUrl}`);
         setQrUrl(eventUrl); // QRコードURLを設定
       } else {
@@ -74,7 +77,7 @@ export default function Page() {
         );
         setMessage("もう一度試してください");
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error uploading files:", error);
       setMessage("ネットワークエラーが発生しました。もう一度試してください。");
     } finally {

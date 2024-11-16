@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import './Button.css';
+import '@styles/Button.css';
 
 interface FileUploadButtonProps {
   label: string;
@@ -18,11 +18,14 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
+    console.log(fileInputRef.current)
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event:React.ChangeEvent<HTMLInputElement> ) => {
     const file = event.target.files?.[0];
+    console.log("wow")
     if (file) {
       setFileName(file.name);
       onFileSelect(file);

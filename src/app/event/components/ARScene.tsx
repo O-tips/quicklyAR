@@ -3,19 +3,6 @@ import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
 
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "a-scene": any;
-      "a-assets": any;
-      "a-asset-item": any;
-      "a-camera": any;
-      "a-entity": any;
-      "a-gltf-model": any;
-    }
-  }
-}
-
 interface ARSceneProps {
   markerUrl: string | null;
   modelUrl: string | null;
@@ -23,9 +10,8 @@ interface ARSceneProps {
 
 const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
-  const [blobUrl, setBlobUrl] = useState<string | null>(null);
 
-  // A-Frame and MindAR initialization
+  // A-FrameとMindARの初期化
   useEffect(() => {
     const loadAFrame = async () => {
       if (typeof window !== "undefined") {
@@ -39,105 +25,50 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
     loadAFrame();
   }, []);
 
-  // Handle modelUrl changes and create a Blob URL
-  useEffect(() => {
-    if (modelUrl) {
-      fetch(modelUrl)
-        .then((response) => response.blob())
-        .then((blob) => {
-          const newBlobUrl = URL.createObjectURL(blob);
-          setBlobUrl(newBlobUrl);
-          console.log("Blob URL created:", newBlobUrl);
-        })
-        .catch((error) => {
-          console.error("Error fetching the model:", error);
-        });
-
-      // Cleanup the blob URL when the component unmounts or modelUrl changes
-      return () => {
-        if (blobUrl) {
-          URL.revokeObjectURL(blobUrl);
-          console.log("Blob URL revoked");
-        }
-      };
-    }
-  }, [modelUrl]);
-
-  // AR scene event listeners
+  // AR sceneイベントリスナー
   useEffect(() => {
     if (!isAFrameLoaded) return;
 
-    const sceneEl = document.querySelector("a-scene");
+    const timeoutId = setTimeout(() => {
+      const sceneEl = document.querySelector("a-scene");
+      console.log("sceneEl", sceneEl);
 
-    const onARReady = () => {
-      console.log("MindAR is ready");
-    };
+      if (sceneEl) {
+        const onARReady = () => console.log("MindAR is ready");
+        const onTargetFound = () => {
+          console.log("Target found");
+          updateModel();
+        };
+        const onTargetLost = () => console.log("Target lost");
 
-    const onTargetFound = () => {
-      console.log("Target found");
-      requestAnimationFrame(() => {
-        updateModel();
-      });
-    };
+        sceneEl.addEventListener("arReady", onARReady);
+        sceneEl.addEventListener("targetFound", onTargetFound);
+        sceneEl.addEventListener("targetLost", onTargetLost);
 
-    const onTargetLost = () => {
-      console.log("Target lost");
-    };
-
-    if (sceneEl != null) {
-      sceneEl.addEventListener("arReady", onARReady);
-      sceneEl.addEventListener("targetFound", onTargetFound);
-      sceneEl.addEventListener("targetLost", onTargetLost);
-    }
-
-    return () => {
-      if (sceneEl != null) {
-        sceneEl.removeEventListener("arReady", onARReady);
-        sceneEl.removeEventListener("targetFound", onTargetFound);
-        sceneEl.removeEventListener("targetLost", onTargetLost);
+        return () => {
+          sceneEl.removeEventListener("arReady", onARReady);
+          sceneEl.removeEventListener("targetFound", onTargetFound);
+          sceneEl.removeEventListener("targetLost", onTargetLost);
+        };
       }
-    };
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
   }, [isAFrameLoaded]);
 
   const updateModel = () => {
     console.log("Updating model");
-
-    const models = [document.querySelector("#model0")];
-
-    models.forEach((model, idx) => {
-      const isVisible = idx === 0;
-      if (model != null) {
-        model.setAttribute("visible", isVisible ? "true" : "false");
-        console.log(`Model ${idx} visibility: ${isVisible}`);
-      }
-    });
-
-    move();
+    const model = document.querySelector("#model0");
+    if (model) {
+      model.setAttribute("visible", "true");
+      console.log("Model visibility updated to true");
+    }
 
     const photoFrameOverlay = document.getElementById("photo-frame-overlay");
     if (photoFrameOverlay) photoFrameOverlay.style.display = "block";
   };
 
-  const move = () => {
-    const penguin = document.querySelector("#model0");
-    let position = 0;
-    const speed = 0.001;
-    let direction = 1;
-
-    function animate() {
-      position += speed * direction;
-
-      if (position > 0.2 || position < -0.2) {
-        direction *= -1;
-      }
-
-      requestAnimationFrame(animate);
-    }
-
-    animate();
-  };
-
-  if (!isAFrameLoaded || !blobUrl) {
+  if (!isAFrameLoaded || !markerUrl || !modelUrl) {
     return <div>Loading A-Frame or Model...</div>;
   }
 
@@ -152,7 +83,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
       <a-assets>
         <a-asset-item
           id="model0"
-          src={blobUrl} // Use the blobUrl after it's set
+          src={modelUrl}
         ></a-asset-item>
       </a-assets>
 
@@ -161,9 +92,9 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
       <a-entity mindar-image-target="targetIndex: 0">
         <a-gltf-model
           id="model0"
-          rotation="45 0 0"
+          rotation="0 0 0"
           position="0 0 0.1"
-          scale="3 3 3"
+          scale="1 1 1"
           src="#model0"
           visible="true"
         ></a-gltf-model>
