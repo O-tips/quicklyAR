@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
+// import "@eventcomponent/styles.css";
 
 interface ARSceneProps {
   markerUrl: string | null;
@@ -56,6 +57,20 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
     return () => clearTimeout(timeoutId);
   }, [isAFrameLoaded]);
 
+  useEffect(() => {
+    console.log("change width");
+    const videoElement = document.querySelector("video");
+    if (videoElement) {
+      videoElement.style.position = "absolute";
+      videoElement.style.top = "0";
+      videoElement.style.left = "0";
+      videoElement.style.width = "100vw";
+      videoElement.style.height = "100vh";
+      videoElement.style.objectFit = "cover";
+      videoElement.style.zIndex = "-2";
+    }
+  }, [isAFrameLoaded]);
+
   const updateModel = () => {
     console.log("Updating model");
     const model = document.querySelector("#model0");
@@ -71,6 +86,8 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
   if (!isAFrameLoaded || !markerUrl || !modelUrl) {
     return <div>Loading A-Frame or Model...</div>;
   }
+
+  
 
   return (
     <a-scene
