@@ -49,3 +49,47 @@ h2, h3 {
   margin-top: 1em;
   color: #333;
 }
+
+.fortune-dialog {
+  border: none;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.fortune-content h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.fortune-content pre {
+  margin: 10px 0;
+  font-size: 1rem;
+}
+
+#close-fortune {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+#close-fortune:hover {
+  background-color: #0056b3;
+}
+
+#clickable-area {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 30vw;
+  background-color: transparent;
+  z-index: 1001;
+  cursor: pointer;
+}
