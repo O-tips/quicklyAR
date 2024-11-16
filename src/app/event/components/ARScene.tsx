@@ -6,9 +6,10 @@ import "mind-ar/dist/mindar-image-aframe.prod.js";
 interface ARSceneProps {
   markerUrl: string | null;
   modelUrl: string | null;
+  onModelClick: () => void; // モデルクリック時のコールバック
 }
 
-const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
+const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl, onModelClick }) => {
   const [isAFrameLoaded, setIsAFrameLoaded] = useState(false);
 
   // A-FrameとMindARの初期化
@@ -68,6 +69,24 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
     if (photoFrameOverlay) photoFrameOverlay.style.display = "block";
   };
 
+  // モデルのクリックイベントを設定
+  useEffect(() => {
+    if (!isAFrameLoaded) return;
+
+    const model = document.querySelector("#model0");
+    if (model) {
+      model.addEventListener("click", onModelClick); // クリックイベントを登録
+      console.log("Click event added to the model");
+    }
+
+    return () => {
+      if (model) {
+        model.removeEventListener("click", onModelClick); // クリーンアップ
+        console.log("Click event removed from the model");
+      }
+    };
+  }, [isAFrameLoaded, onModelClick]);
+
   if (!isAFrameLoaded || !markerUrl || !modelUrl) {
     return <div>Loading A-Frame or Model...</div>;
   }
@@ -81,10 +100,7 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
       device-orientation-permission-ui="enabled: false"
     >
       <a-assets>
-        <a-asset-item
-          id="model0"
-          src={modelUrl}
-        ></a-asset-item>
+        <a-asset-item id="model0" src={modelUrl}></a-asset-item>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
