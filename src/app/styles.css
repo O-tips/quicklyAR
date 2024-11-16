@@ -32,14 +32,20 @@ h2, h3 {
 }
 
 .message.success {
-  color: green;
+  color: #3a859e;
 }
 
 .message.error {
-  color: red;
+  color: #ac676c;
 }
 
 .loading-message {
-  color: blue;
-  font-style: italic;
+  margin-top: 30px;
+  color: #333;
+  /* font-style: italic; */
+}
+
+.qr-container {
+  margin-top: 1em;
+  color: #333;
 }
