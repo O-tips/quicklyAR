@@ -29,6 +29,11 @@
   background-color: #b6a026;
 }
 
+.upload-button.disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
 /* 他のボタンのスタイル */
 .custom-button {
   background-color: #7ba6b4;
