@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import "aframe";
 import "mind-ar/dist/mindar-image-aframe.prod.js";
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography,
+} from "@mui/material";
 
 interface ARSceneProps {
   markerUrl: string | null;
@@ -136,15 +140,69 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
         onClick={handleModelClick} // クリック時のイベントハンドラ
       ></div>
 
-      <Dialog open={isDialogOpen} onClose={closeDialog}>
-        <DialogTitle >投票お願いします！</DialogTitle>
-        <div className="fortune-content">
-          {/* <Typography variant="h2">http://abehiroshi.la.coocan.jp/</Typography> */}
-          <a href="https://forms.gle/B4G6LR4CKcaTkgZ59/">ここをクリック！</a>
-          <Button onClick={closeDialog}>閉じる</Button>
+<Dialog
+      open={isDialogOpen}
+      onClose={closeDialog}
+      PaperProps={{
+        style: {
+          borderRadius: "15px",
+          padding: "20px",
+          boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.2)",
+        },
+      }}
+    >
+      <DialogTitle style={{ textAlign: "center", color: "#4A90E2" }}>
+        投票お願いします！
+      </DialogTitle>
+      <DialogContent>
+        <div
+          className="fortune-content"
+          style={{
+            textAlign: "center",
+            color: "#333",
+            fontSize: "1.2rem",
+            lineHeight: "1.8",
+          }}
+        >
+          <Typography variant="body1" style={{ marginBottom: "20px" }}>
+            下記リンクから投票をお願いします！
+          </Typography>
+          <a
+            href="https://forms.gle/B4G6LR4CKcaTkgZ59/"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              textDecoration: "none",
+              color: "#fff",
+              backgroundColor: "#4A90E2",
+              padding: "10px 20px",
+              borderRadius: "5px",
+              display: "inline-block",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            ここをクリック！
+          </a>
         </div>
-      </Dialog>
-
+      </DialogContent>
+      <DialogActions style={{ justifyContent: "center" }}>
+        <Button
+          onClick={closeDialog}
+          style={{
+            backgroundColor: "#FF5A5F",
+            color: "#fff",
+            padding: "10px 20px",
+            borderRadius: "5px",
+            fontWeight: "bold",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+          }}
+        >
+          閉じる
+        </Button>
+      </DialogActions>
+    </Dialog>
     </>
   );
 };
