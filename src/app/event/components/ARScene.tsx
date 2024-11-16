@@ -74,6 +74,14 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
 
   return (
     <a-scene
+      style={{
+        width: "100vw",
+        height: "100vh",
+        display: "block",
+        margin: "0",
+        padding: "0",
+        overflow: "hidden",
+      }}
       mindar-image={`imageTargetSrc: ${markerUrl};`}
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
