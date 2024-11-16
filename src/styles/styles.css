@@ -49,3 +49,28 @@ h2, h3 {
   margin-top: 1em;
   color: #333;
 }
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #3a859e; /* チェックボックスの色を設定 */
+  cursor: pointer;
+}
+
+.checkbox-container label {
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"]:disabled {
+  opacity: 0.6; /* 無効化されたときの透明度 */
+  cursor: not-allowed;
+}
