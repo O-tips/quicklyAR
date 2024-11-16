@@ -12,7 +12,7 @@ function App() {
   const [markerUrl, setMarkerUrl] = useState<string | null>(null);
   const [modelUrl, setModelUrl] = useState<string | null>(null);
   const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -40,31 +40,29 @@ function App() {
     }
   }, [id]);
 
-  const handleModelClick = () => {
-    console.log("clicked")
-    setIsDialogOpen(true);
-  };
 
-  const closeDialog = () => {
-    setIsDialogOpen(false);
-  };
+
+  
+  // const clickableArea = document.getElementById('clickable-area');
+  
+  // clickableArea.addEventListener('click', function() {
+  //   if (fortuneDialog && fortuneDetails) {
+  //     fortuneText.textContent = fortuneTexts[randInt];
+  //     fortuneDetails.textContent = fortuneDescriptions[randInt];
+  //     fortuneDialog.showModal();
+  //     console.log("Fortune dialog shown");
+  //   } else {
+  //     console.error("Fortune dialog or details element not found");
+  //   }
+  // });
+
+
 
   return (
     <>
       {isDataLoaded ? (
         <>
-          <ARScene markerUrl={markerUrl} modelUrl={modelUrl} onModelClick={handleModelClick} />
-          {isDialogOpen && (
-            <dialog id="fortune-dialog" className="fortune-dialog" open>
-              <div className="fortune-content">
-                <h2 id="fortune-text">運勢</h2>
-                <pre id="fortune-details">大吉です！おめでとうございます。</pre>
-                <button id="close-fortune" onClick={closeDialog}>
-                  閉じる
-                </button>
-              </div>
-            </dialog>
-          )}
+          <ARScene markerUrl={markerUrl} modelUrl={modelUrl} />
         </>
       ) : (
         <div>Loading AR scene...</div>

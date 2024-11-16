@@ -81,3 +81,15 @@ h2, h3 {
 #close-fortune:hover {
   background-color: #0056b3;
 }
+
+#clickable-area {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 30vw;
+  background-color: transparent;
+  z-index: 1001;
+  cursor: pointer;
+}
