@@ -92,9 +92,9 @@ const ARScene: React.FC<ARSceneProps> = ({ markerUrl, modelUrl }) => {
       <a-entity mindar-image-target="targetIndex: 0">
         <a-gltf-model
           id="model0"
-          rotation="45 0 0"
+          rotation="0 0 0"
           position="0 0 0.1"
-          scale="3 3 3"
+          scale="1 1 1"
           src="#model0"
           visible="true"
         ></a-gltf-model>
